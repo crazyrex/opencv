@@ -101,7 +101,9 @@ if(UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR CV_ICC))
 endif()
 
 add_library(${TIFF_LIBRARY} STATIC ${lib_srcs})
-target_link_libraries(${TIFF_LIBRARY} ${ZLIB_LIBRARIES})
+if (NOT EMSCRIPTEN)
+  target_link_libraries(${TIFF_LIBRARY} ${ZLIB_LIBRARIES})
+endif()
 
 set_target_properties(${TIFF_LIBRARY}
     PROPERTIES

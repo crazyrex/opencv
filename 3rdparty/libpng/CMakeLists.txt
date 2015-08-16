@@ -34,7 +34,9 @@ if (HAVE_WINRT)
 endif()
 
 add_library(${PNG_LIBRARY} STATIC ${lib_srcs} ${lib_hdrs})
-target_link_libraries(${PNG_LIBRARY} ${ZLIB_LIBRARIES})
+if (NOT EMSCRIPTEN)
+  target_link_libraries(${PNG_LIBRARY} ${ZLIB_LIBRARIES})
+endif()
 
 if(UNIX)
   if(CMAKE_COMPILER_IS_GNUCXX OR CV_ICC)

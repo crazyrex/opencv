@@ -13,7 +13,9 @@ endif()
 
 if(APPLE)
   ocv_include_directories(${ZLIB_INCLUDE_DIRS})
-  list(APPEND VIDEOIO_LIBRARIES ${ZLIB_LIBRARIES})
+  if (NOT EMSCRIPTEN)
+    list(APPEND VIDEOIO_LIBRARIES ${ZLIB_LIBRARIES})
+  endif()
 endif()
 
 set(videoio_hdrs

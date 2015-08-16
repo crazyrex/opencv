@@ -50,7 +50,9 @@ if(UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR CV_ICC))
 endif()
 
 add_library(IlmImf STATIC ${lib_hdrs} ${lib_srcs})
-target_link_libraries(IlmImf ${ZLIB_LIBRARIES})
+if (NOT EMSCRIPTEN)
+  target_link_libraries(IlmImf ${ZLIB_LIBRARIES})
+endif()
 
 set_target_properties(IlmImf
     PROPERTIES
