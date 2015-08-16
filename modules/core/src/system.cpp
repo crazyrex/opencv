@@ -56,6 +56,10 @@
 #  include <linux/auxvec.h>
 #endif
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #if defined WIN32 || defined _WIN32 || defined WINCE
 #ifndef _WIN32_WINNT           // This is needed for the declaration of TryEnterCriticalSection in winbase.h with Visual Studio 2005 (and older?)
   #define _WIN32_WINNT 0x0400  // http://msdn.microsoft.com/en-us/library/ms686857(VS.85).aspx
@@ -398,6 +402,8 @@ int64 getTickCount(void)
     LARGE_INTEGER counter;
     QueryPerformanceCounter( &counter );
     return (int64)counter.QuadPart;
+#elif defined __EMSCRIPTEN__
+    return (int64)(emscripten_get_now() * 1e6);
 #elif defined __linux || defined __linux__
     struct timespec tp;
     clock_gettime(CLOCK_MONOTONIC, &tp);
@@ -418,6 +424,8 @@ double getTickFrequency(void)
     LARGE_INTEGER freq;
     QueryPerformanceFrequency(&freq);
     return (double)freq.QuadPart;
+#elif defined __EMSCRIPTEN__
+    return 1e9;
 #elif defined __linux || defined __linux__
     return 1e9;
 #elif defined __MACH__ && defined __APPLE__
