@@ -265,6 +265,11 @@ if(MSVC)
   endif()
 endif()
 
+if (EMSCRIPTEN)
+  set(OPENCV_EXTRA_FLAGS "${OPENCV_EXTRA_FLAGS} -Wno-warn-absolute-paths")
+  set(OPENCV_EXTRA_EXE_LINKER_FLAGS "${OPENCV_EXTRA_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=536870912 -s DISABLE_EXCEPTION_CATCHING=0 -s PRECISE_F32=1")
+endif()
+
 # Extra link libs if the user selects building static libs:
 if(NOT BUILD_SHARED_LIBS AND CMAKE_COMPILER_IS_GNUCXX AND NOT ANDROID)
   # Android does not need these settings because they are already set by toolchain file
