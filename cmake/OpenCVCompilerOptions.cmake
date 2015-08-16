@@ -102,7 +102,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_extra_compiler_option(-Werror)
   endif()
 
-  if(X86 AND NOT MINGW64 AND NOT X86_64 AND NOT APPLE)
+  if(X86 AND NOT MINGW64 AND NOT X86_64 AND NOT APPLE AND NOT EMSCRIPTEN)
     add_extra_compiler_option(-march=i686)
   endif()
 
